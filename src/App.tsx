@@ -20,9 +20,8 @@ function App() {
   const [addProtectedDataToCollectionSuccess, setAddProtectedDataToCollectionSuccess] = useState(false);
   const [isLoadingSetProtectedDataForSale, setIsLoadingSetProtectedDataForSale] = useState(false);
   const [setProtectedDataForSaleSuccess, setSetProtectedDataForSaleSuccess] = useState(false);
-   const [isLoadingBuyProtectedData, setIsLoadingBuyProtectedData] = useState(false);
+  const [isLoadingBuyProtectedData, setIsLoadingBuyProtectedData] = useState(false);
   const [buyProtectedDataSuccess, setBuyProtectedDataSuccess] = useState(false);
-
 
   const protectData = async () => {
     try {
@@ -30,7 +29,7 @@ function App() {
       setIsLoadingProtectData(true); // Show loader
       const protectedDataResponse = await iExecDataProtectorClient.core.protectData({
         data: { test: 'data protector sandbox test protected data' },
-        name: 'data protector sandbox test protected data'
+        name: 'data protector sandbox test protected data',
       });
       setProtectedData(protectedDataResponse);
       setProtectedDataAddressInput(protectedDataResponse.address);
@@ -63,7 +62,7 @@ function App() {
       setIsLoadingAddProtectedDataToCollection(true); // Show loader
       await iExecDataProtectorClient.sharing.addToCollection({
         protectedData: protectedDataAddressInput,
-        collectionId: +collectionIdInput
+        collectionId: +collectionIdInput,
       });
       setIsLoadingAddProtectedDataToCollection(false); // hide loader
       setAddProtectedDataToCollectionSuccess(true); // show success icon
@@ -71,15 +70,15 @@ function App() {
       setIsLoadingAddProtectedDataToCollection(false); // hide loader
       console.log(e);
     }
-    
   };
+
   const setProtectedDataForSale = async () => {
     try {
       setSetProtectedDataForSaleSuccess(false);
       setIsLoadingSetProtectedDataForSale(true); // Show loader
       await iExecDataProtectorClient.sharing.setProtectedDataForSale({
         protectedData: protectedDataAddressInput,
-        priceInNRLC: +protectedDataPriceInput
+        priceInNRLC: +protectedDataPriceInput,
       });
       setIsLoadingSetProtectedDataForSale(false); // hide loader
       setSetProtectedDataForSaleSuccess(true); // show success icon
@@ -88,6 +87,7 @@ function App() {
       console.log(e);
     }
   };
+
   const buyProtectedData = async () => {
     try {
       setBuyProtectedDataSuccess(false);
@@ -101,7 +101,6 @@ function App() {
       setIsLoadingBuyProtectedData(false); // hide loader
       console.log(e);
     }
-    
   };
 
   const handleProtectedDataAddressChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -115,124 +114,164 @@ function App() {
   const handleProtectedDataPriceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setProtectedDataPriceInput(event.target.value);
   };
-  
 
   return (
-    <><div>
-      <div><h2>Create Test Protected Data</h2></div>
-      <div>
-        {isLoadingProtectData ? <img src={loader} alt="loading" height='30px' /> : <button onClick={protectData}>Create Test Protected Data</button>}
-        {protectDataSuccess ? <div>
-  <label style={{ display: 'inline-block', verticalAlign: 'middle' }}>
-    <img src={successIcon} alt="success" height='30px' style={{ verticalAlign: 'middle' }} /> 
-    Successful creation
-  </label>
-</div>:<></>}
-      </div>
-      <hr/>
-    </div>
-      <div>
-        <div><h2>Create Collection</h2></div>
-        <div>
-          {isLoadingCreateCollection ? <img src={loader} alt="loading" height='30px' /> : <button onClick={createCollection}>Create Collection</button>}
-        {createCollectionSuccess ? <div>
-  <label style={{ display: 'inline-block', verticalAlign: 'middle' }}>
-    <img src={successIcon} alt="success" height='30px' style={{ verticalAlign: 'middle' }} /> 
-    Successful creation
-  </label>
-</div>:<></>}
-        
-        </div>
-        <hr/>
-        </div>
+    <>
       <div>
         <div>
-        <div><h2>Add Protected Data To Collection</h2></div>
-        <div>
-          <label>
-            Protected Data Address:
-            <input 
-              name="Protected Data Address" 
-              value={protectedData.address} 
-              onChange={handleProtectedDataAddressChange} 
-            />
-          </label>
+          <h2>Create Test Protected Data</h2>
         </div>
         <div>
-          <label>
-            Collection Id:
-            <input 
-              name="Collection Id" 
-              value={collection.collectionId} 
-              onChange={handleCollectionIdChange} 
-            />
-          </label>
-          </div>
-           {isLoadingAddProtectedDataToCollection ? <img src={loader} alt="loading" height='30px' /> : <button onClick={addToCollection}>Add Protected Data To Collection</button>}
-        {addProtectedDataToCollectionSuccess ? <div>
-  <label style={{ display: 'inline-block', verticalAlign: 'middle' }}>
-    <img src={successIcon} alt="success" height='30px' style={{ verticalAlign: 'middle' }} /> 
-    Protected Data Added to Collection
-  </label>
-</div>:<></>}
-        
+          {isLoadingProtectData ? (
+            <img src={loader} alt="loading" height="30px" />
+          ) : (
+            <button onClick={protectData}>Create Test Protected Data</button>
+          )}
+          {protectDataSuccess ? (
+            <div>
+              <label style={{ display: 'inline-block', verticalAlign: 'middle' }}>
+                <img src={successIcon} alt="success" height="30px" style={{ verticalAlign: 'middle' }} />
+                Successful creation
+              </label>
+            </div>
+          ) : (
+            <></>
+          )}
         </div>
-        <hr/>
+        <hr />
       </div>
       <div>
         <div>
-        <div><h2>Set Protected Data For Sale</h2></div>
-        <div>
-          <label>
-            Protected Data Address:
-            <input 
-              name="Protected Data Address" 
-              value={protectedData.address} 
-              onChange={handleProtectedDataAddressChange} 
-            />
-          </label>
+          <h2>Create Collection</h2>
         </div>
         <div>
-          <label>
-            Price of Protected Data:
-            <input 
-              name="Protected Data Price" 
-              defaultValue='0' 
-              onChange={handleProtectedDataPriceChange} 
-            />
-          </label>
+          {isLoadingCreateCollection ? (
+            <img src={loader} alt="loading" height="30px" />
+          ) : (
+            <button onClick={createCollection}>Create Collection</button>
+          )}
+          {createCollectionSuccess ? (
+            <div>
+              <label style={{ display: 'inline-block', verticalAlign: 'middle' }}>
+                <img src={successIcon} alt="success" height="30px" style={{ verticalAlign: 'middle' }} />
+                Successful creation
+              </label>
+            </div>
+          ) : (
+            <></>
+          )}
+        </div>
+        <hr />
+      </div>
+      <div>
+        <div>
+          <div>
+            <h2>Add Protected Data To Collection</h2>
           </div>
-           {isLoadingSetProtectedDataForSale ? <img src={loader} alt="loading" height='30px' /> : <button onClick={setProtectedDataForSale}>Set Protected Data For Sale</button>}
-        {setProtectedDataForSaleSuccess ? <div>
-  <label style={{ display: 'inline-block', verticalAlign: 'middle' }}>
-    <img src={successIcon} alt="success" height='30px' style={{ verticalAlign: 'middle' }} /> 
-    Protected Data Set for Sale
-  </label>
-</div>:<></>}
-        
+          <div>
+            <label>
+              Protected Data Address:
+              <input
+                name="Protected Data Address"
+                value={protectedData.address}
+                onChange={handleProtectedDataAddressChange}
+              />
+            </label>
+          </div>
+          <div>
+            <label>
+              Collection Id:
+              <input name="Collection Id" value={collection.collectionId} onChange={handleCollectionIdChange} />
+            </label>
+          </div>
+          {isLoadingAddProtectedDataToCollection ? (
+            <img src={loader} alt="loading" height="30px" />
+          ) : (
+            <button onClick={addToCollection}>Add Protected Data To Collection</button>
+          )}
+          {addProtectedDataToCollectionSuccess ? (
+            <div>
+              <label style={{ display: 'inline-block', verticalAlign: 'middle' }}>
+                <img src={successIcon} alt="success" height="30px" style={{ verticalAlign: 'middle' }} />
+                Protected Data Added to Collection
+              </label>
+            </div>
+          ) : (
+            <></>
+          )}
         </div>
-        <hr/>
+        <hr />
+      </div>
+      <div>
+        <div>
+          <div>
+            <h2>Set Protected Data For Sale</h2>
+          </div>
+          <div>
+            <label>
+              Protected Data Address:
+              <input
+                name="Protected Data Address"
+                value={protectedData.address}
+                onChange={handleProtectedDataAddressChange}
+              />
+            </label>
+          </div>
+          <div>
+            <label>
+              Price of Protected Data:
+              <input name="Protected Data Price" defaultValue="0" onChange={handleProtectedDataPriceChange} />
+            </label>
+          </div>
+          {isLoadingSetProtectedDataForSale ? (
+            <img src={loader} alt="loading" height="30px" />
+          ) : (
+            <button onClick={setProtectedDataForSale}>Set Protected Data For Sale</button>
+          )}
+          {setProtectedDataForSaleSuccess ? (
+            <div>
+              <label style={{ display: 'inline-block', verticalAlign: 'middle' }}>
+                <img src={successIcon} alt="success" height="30px" style={{ verticalAlign: 'middle' }} />
+                Protected Data Set for Sale
+              </label>
+            </div>
+          ) : (
+            <></>
+          )}
+        </div>
+        <hr />
       </div>
 
-      <div><div>
-        <div><h2>Buy Protected Data</h2></div>
+      <div>
         <div>
-          <label>
-            Protected Data Address:
-            <input 
-              name="Protected Data Address" 
-              value={protectedData.address} 
-              onChange={handleProtectedDataAddressChange} 
-            />
-          </label>
-        </div>
-         {isLoadingBuyProtectedData ? <img src={loader} alt="loading" height='30px' /> :  <button onClick={buyProtectedData}>Buy Protected Data</button>}
-        {buyProtectedDataSuccess ? <div>
-  <label style={{ display: 'inline-block', verticalAlign: 'middle' }}>
-    <img src={successIcon} alt="success" height='30px' style={{ verticalAlign: 'middle' }} /> 
-    You Now Own The Protected Data
-  </label>
-</div>:<></>}
+          <div>
+            <h2>Buy Protected Data</h2>
+          </div>
+          <div>
+            <label>
+              Protected Data Address:
+              <input
+                name="Protected Data Address"
+                value={protectedData.address}
+                onChange={handleProtectedDataAddressChange}
+              />
+            </label>
+          </div>
+          {isLoadingBuyProtectedData ? (
+            <img src={loader} alt="loading" height="30px" />
+          ) : (
+            <button onClick={buyProtectedData}>Buy Protected Data</button>
+          )}
+          {buyProtectedDataSuccess ? (
+            <div>
+              <label style={{ display: 'inline-block', verticalAlign: 'middle' }}>
+                <img src={successIcon} alt="success" height="30px" style={{ verticalAlign: 'middle' }} />
+                You Now Own The Protected Data
+              </label>
+            </div>
+          ) : (
+            <></>
+          )}
         </div>
       </div>
     </>
