@@ -29,7 +29,7 @@ function App() {
   const addToCollection = async () => {
      await iExecDataProtectorClient.sharing.addToCollection({
       protectedData: protectedDataAddressInput,
-      collectionId: Number(collectionIdInput)
+      collectionId: +collectionIdInput
     });
     
   };
