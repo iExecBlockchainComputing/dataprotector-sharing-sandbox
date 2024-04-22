@@ -6,7 +6,7 @@ To learn more, please refer to [DataProtector documentation](https://tools.docs.
 
 You may also find this project on [Codesandbox](https://codesandbox.io/p/github/iExecBlockchainComputing/dataprotector-sharing-sandbox/main)
 
-Make sure to use the last [package version](https://www.npmjs.com/package/@iexec/dataprotector).
+Make sure to use the [latest dataprotector version](https://www.npmjs.com/package/@iexec/dataprotector).
 
 ## Installation
 
@@ -17,5 +17,5 @@ npm ci
 ## Running the project
 
 ```sh
-npm run start
+npm start
 ```
