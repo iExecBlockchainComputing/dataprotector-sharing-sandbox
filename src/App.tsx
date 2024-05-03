@@ -335,8 +335,8 @@ function App() {
             <div>
               <label style={{ display: 'inline-block', verticalAlign: 'middle' }}>
                 <img src={successIcon} alt="success" height="30px" style={{ verticalAlign: 'middle' }} />
-                You can now visualize the rented Protected Data
-                <a href={contentAsObjectURL} download="ProtectedData.zip">
+                You can now visualize the rented Protected Data :
+                <a href={contentAsObjectURL} download="ProtectedDataFile.txt">
                   Download File
                 </a>
               </label>
