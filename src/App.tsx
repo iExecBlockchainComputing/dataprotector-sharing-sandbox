@@ -37,7 +37,7 @@ function App() {
       setProtectDataSuccess(false);
       setIsLoadingProtectData(true); // Show loader
       const protectedDataResponse = await iExecDataProtectorClient.core.protectData({
-        data: { test: 'data protector sandbox test protected data' },
+        data: { file: 'data protector sandbox test protected data' }, // field "file" must be used if you use the iExec iDapp build for demo
         name: 'data protector sandbox test protected data',
       });
       console.log('protectedDataResponse: ', protectedDataResponse);
