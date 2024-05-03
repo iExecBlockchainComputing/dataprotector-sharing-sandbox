@@ -30,7 +30,7 @@ function App() {
   const [isLoadingConsumeProtectedData, setIsLoadingConsumeProtectedData] = useState(false);
   //For ConsumeProtectedData
   const [consumeProtectedDataSuccess, setConsumeProtectedDataSuccess] = useState(false);
-  const [contentAsObjectURL, setContentAsObjectURL] = useState('');
+  const [content, setContent] = useState('');
 
   const protectData = async () => {
     try {
@@ -135,8 +135,8 @@ function App() {
         app: '0xF248000F0E99e9203FdBE509019f008F9c169705', //An iDapp from the AppWhitelist Managed by iExec Team
       });
       console.log('consumeProtectedDataResult: ', consumeProtectedDataResult);
-
-      setContentAsObjectURL(contentAsObjectURL);
+      console.log(consumeProtectedDataResult.contentAsObjectURL);
+      setContent(consumeProtectedDataResult.contentAsObjectURL);
       setIsLoadingConsumeProtectedData(false); // hide loader
       setConsumeProtectedDataSuccess(true); // show success icon
     } catch (e) {
@@ -336,7 +336,7 @@ function App() {
               <label style={{ display: 'inline-block', verticalAlign: 'middle' }}>
                 <img src={successIcon} alt="success" height="30px" style={{ verticalAlign: 'middle' }} />
                 You can now visualize the rented Protected Data :
-                <a href={contentAsObjectURL} download="ProtectedDataFile.txt">
+                <a href={content} download="ProtectedDataFile.txt">
                   Download File
                 </a>
               </label>
