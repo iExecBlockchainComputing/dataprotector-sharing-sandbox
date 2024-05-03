@@ -221,7 +221,7 @@ function App() {
         ) : (
           <></>
         )}
-        <hr />
+        <hr style={{ marginTop: '30px' }} />
       </div>
 
       <div>
@@ -241,7 +241,7 @@ function App() {
         ) : (
           <></>
         )}
-        <hr />
+        <hr style={{ marginTop: '30px' }} />
       </div>
 
       <div>
@@ -278,7 +278,7 @@ function App() {
         ) : (
           <></>
         )}
-        <hr />
+        <hr style={{ marginTop: '30px' }} />
       </div>
 
       <div>
@@ -315,7 +315,7 @@ function App() {
         ) : (
           <></>
         )}
-        <hr />
+        <hr style={{ marginTop: '30px' }} />
       </div>
 
       <div>
@@ -346,7 +346,7 @@ function App() {
         ) : (
           <></>
         )}
-        <hr />
+        <hr style={{ marginTop: '30px' }} />
       </div>
 
       <div>
@@ -370,6 +370,7 @@ function App() {
             </button>
           </label>
         )}
+        <hr style={{ marginTop: '30px' }} />
       </div>
 
       <div>
