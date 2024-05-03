@@ -7,21 +7,30 @@ import successIcon from './assets/success.png';
 const iExecDataProtectorClient = new IExecDataProtector(window.ethereum);
 
 function App() {
+  //For CreateProtectedData
   const [protectedData, setProtectedData] = useState<ProtectedData | Record<string, never>>({});
-  const [collection, setCollection] = useState<CreateCollectionResponse | Record<string, never>>({});
   const [protectedDataAddressInput, setProtectedDataAddressInput] = useState('');
-  const [collectionIdInput, setCollectionIdInput] = useState('');
-  const [protectedDataPriceInput, setProtectedDataPriceInput] = useState('');
   const [isLoadingProtectData, setIsLoadingProtectData] = useState(false);
   const [protectDataSuccess, setProtectDataSuccess] = useState(false);
+  //For CreateCollection
+  const [collection, setCollection] = useState<CreateCollectionResponse | Record<string, never>>({});
+  const [collectionIdInput, setCollectionIdInput] = useState('');
   const [isLoadingCreateCollection, setIsLoadingCreateCollection] = useState(false);
   const [createCollectionSuccess, setCreateCollectionSuccess] = useState(false);
+  //For AddToCollection
   const [isLoadingAddProtectedDataToCollection, setIsLoadingAddProtectedDataToCollection] = useState(false);
   const [addProtectedDataToCollectionSuccess, setAddProtectedDataToCollectionSuccess] = useState(false);
-  const [isLoadingSetProtectedDataForSale, setIsLoadingSetProtectedDataForSale] = useState(false);
-  const [setProtectedDataForSaleSuccess, setSetProtectedDataForSaleSuccess] = useState(false);
-  const [isLoadingBuyProtectedData, setIsLoadingBuyProtectedData] = useState(false);
-  const [buyProtectedDataSuccess, setBuyProtectedDataSuccess] = useState(false);
+  //For SetProtectDataToRenting
+  const [protectedDataPriceInput, setProtectedDataPriceInput] = useState('');
+  const [isLoadingSetProtectedDataToRenting, setIsLoadingSetProtectedDataToRenting] = useState(false);
+  const [setProtectedDataToRentingSuccess, setSetProtectedDataToRentingSuccess] = useState(false);
+  //For RentProtectedData
+  const [isLoadingRentProtectedData, setIsLoadingRentProtectedData] = useState(false);
+  const [rentProtectedDataSuccess, setRentProtectedDataSuccess] = useState(false);
+  const [isLoadingConsumeProtectedData, setIsLoadingConsumeProtectedData] = useState(false);
+  //For ConsumeProtectedData
+  const [consumeProtectedDataSuccess, setConsumeProtectedDataSuccess] = useState(false);
+  const [contentAsObjectURL, setContentAsObjectURL] = useState('');
 
   const protectData = async () => {
     try {
@@ -31,6 +40,8 @@ function App() {
         data: { test: 'data protector sandbox test protected data' },
         name: 'data protector sandbox test protected data',
       });
+      console.log('protectedDataResponse: ', protectedDataResponse);
+
       setProtectedData(protectedDataResponse);
       setProtectedDataAddressInput(protectedDataResponse.address);
       setIsLoadingProtectData(false); // hide loader
@@ -45,9 +56,11 @@ function App() {
     try {
       setCreateCollectionSuccess(false);
       setIsLoadingCreateCollection(true); // Show loader
-      const collectionResponse = await iExecDataProtectorClient.sharing.createCollection();
-      setCollection(collectionResponse);
-      setCollectionIdInput(collectionResponse.collectionId.toString());
+      const createCollectionResponse = await iExecDataProtectorClient.sharing.createCollection();
+      console.log(createCollectionResponse);
+
+      setCollection(createCollectionResponse);
+      setCollectionIdInput(createCollectionResponse.collectionId.toString());
       setIsLoadingCreateCollection(false); // hide loader
       setCreateCollectionSuccess(true); // show success icon
     } catch (e) {
@@ -60,10 +73,13 @@ function App() {
     try {
       setAddProtectedDataToCollectionSuccess(false);
       setIsLoadingAddProtectedDataToCollection(true); // Show loader
-      await iExecDataProtectorClient.sharing.addToCollection({
+      const addToCollectionResult = await iExecDataProtectorClient.sharing.addToCollection({
         protectedData: protectedDataAddressInput,
         collectionId: +collectionIdInput,
+        addOnlyAppWhitelist: '0x334dc0bb08fb32a4e9917197e5e626de4b6b9b87', //AppWhitelist Managed by iExec Team
       });
+      console.log('addToCollectionResult: ', addToCollectionResult);
+
       setIsLoadingAddProtectedDataToCollection(false); // hide loader
       setAddProtectedDataToCollectionSuccess(true); // show success icon
     } catch (e) {
@@ -72,33 +88,59 @@ function App() {
     }
   };
 
-  const setProtectedDataForSale = async () => {
+  const setProtectedDataToRenting = async () => {
     try {
-      setSetProtectedDataForSaleSuccess(false);
-      setIsLoadingSetProtectedDataForSale(true); // Show loader
-      await iExecDataProtectorClient.sharing.setProtectedDataForSale({
+      setSetProtectedDataToRentingSuccess(false);
+      setIsLoadingSetProtectedDataToRenting(true); // Show loader
+      const setProtectedDataToRentingResult = await iExecDataProtectorClient.sharing.setProtectedDataToRenting({
         protectedData: protectedDataAddressInput,
-        priceInNRLC: +protectedDataPriceInput,
+        price: +protectedDataPriceInput,
+        duration: 60 * 60 * 24 * 30,
       });
-      setIsLoadingSetProtectedDataForSale(false); // hide loader
-      setSetProtectedDataForSaleSuccess(true); // show success icon
+      console.log('setProtectedDataToRentingResult: ', setProtectedDataToRentingResult);
+
+      setIsLoadingSetProtectedDataToRenting(false); // hide loader
+      setSetProtectedDataToRentingSuccess(true); // show success icon
     } catch (e) {
-      setIsLoadingSetProtectedDataForSale(false); // hide loader
+      setIsLoadingSetProtectedDataToRenting(false); // hide loader
       console.log(e);
     }
   };
 
-  const buyProtectedData = async () => {
+  const rentProtectedData = async () => {
     try {
-      setBuyProtectedDataSuccess(false);
-      setIsLoadingBuyProtectedData(true); // Show loader
-      await iExecDataProtectorClient.sharing.buyProtectedData({
+      setRentProtectedDataSuccess(false);
+      setIsLoadingRentProtectedData(true); // Show loader
+      const rentProtectedDataResult = await iExecDataProtectorClient.sharing.rentProtectedData({
         protectedData: protectedDataAddressInput,
+        price: +protectedDataPriceInput,
+        duration: 60 * 60 * 24 * 30,
       });
-      setIsLoadingBuyProtectedData(false); // hide loader
-      setBuyProtectedDataSuccess(true); // show success icon
+      console.log('rentProtectedDataResult', rentProtectedDataResult);
+
+      setIsLoadingRentProtectedData(false); // hide loader
+      setRentProtectedDataSuccess(true); // show success icon
     } catch (e) {
-      setIsLoadingBuyProtectedData(false); // hide loader
+      setIsLoadingRentProtectedData(false); // hide loader
+      console.log(e);
+    }
+  };
+
+  const consumeProtectedData = async () => {
+    try {
+      setConsumeProtectedDataSuccess(false);
+      setIsLoadingConsumeProtectedData(true); // Show loader
+      const consumeProtectedDataResult = await iExecDataProtectorClient.sharing.consumeProtectedData({
+        protectedData: protectedDataAddressInput,
+        app: '0xF248000F0E99e9203FdBE509019f008F9c169705', //An iDapp from the AppWhitelist Managed by iExec Team
+      });
+      console.log('consumeProtectedDataResult: ', consumeProtectedDataResult);
+
+      setContentAsObjectURL(contentAsObjectURL);
+      setIsLoadingConsumeProtectedData(false); // hide loader
+      setConsumeProtectedDataSuccess(true); // show success icon
+    } catch (e) {
+      setIsLoadingConsumeProtectedData(false); // hide loader
       console.log(e);
     }
   };
@@ -140,6 +182,7 @@ function App() {
         </div>
         <hr />
       </div>
+
       <div>
         <div>
           <h2>Create Collection</h2>
@@ -163,6 +206,7 @@ function App() {
         </div>
         <hr />
       </div>
+
       <div>
         <div>
           <div>
@@ -202,10 +246,11 @@ function App() {
         </div>
         <hr />
       </div>
+
       <div>
         <div>
           <div>
-            <h2>Set Protected Data For Sale</h2>
+            <h2>Set Protected Data To Renting</h2>
           </div>
           <div>
             <label>
@@ -223,16 +268,16 @@ function App() {
               <input name="Protected Data Price" defaultValue="0" onChange={handleProtectedDataPriceChange} />
             </label>
           </div>
-          {isLoadingSetProtectedDataForSale ? (
+          {isLoadingSetProtectedDataToRenting ? (
             <img src={loader} alt="loading" height="30px" />
           ) : (
-            <button onClick={setProtectedDataForSale}>Set Protected Data For Sale</button>
+            <button onClick={setProtectedDataToRenting}>Set Protected Data to Renting</button>
           )}
-          {setProtectedDataForSaleSuccess ? (
+          {setProtectedDataToRentingSuccess ? (
             <div>
               <label style={{ display: 'inline-block', verticalAlign: 'middle' }}>
                 <img src={successIcon} alt="success" height="30px" style={{ verticalAlign: 'middle' }} />
-                Protected Data Set for Sale
+                Protected Data Set to Renting
               </label>
             </div>
           ) : (
@@ -245,7 +290,7 @@ function App() {
       <div>
         <div>
           <div>
-            <h2>Buy Protected Data</h2>
+            <h2>Rent Protected Data</h2>
           </div>
           <div>
             <label>
@@ -257,16 +302,43 @@ function App() {
               />
             </label>
           </div>
-          {isLoadingBuyProtectedData ? (
+          {isLoadingRentProtectedData ? (
             <img src={loader} alt="loading" height="30px" />
           ) : (
-            <button onClick={buyProtectedData}>Buy Protected Data</button>
+            <button onClick={rentProtectedData}>Rent Protected Data</button>
           )}
-          {buyProtectedDataSuccess ? (
+          {rentProtectedDataSuccess ? (
             <div>
               <label style={{ display: 'inline-block', verticalAlign: 'middle' }}>
                 <img src={successIcon} alt="success" height="30px" style={{ verticalAlign: 'middle' }} />
-                You Now Own The Protected Data
+                You are Now Renting The Protected Data
+              </label>
+            </div>
+          ) : (
+            <></>
+          )}
+        </div>
+        <hr />
+      </div>
+
+      <div>
+        <div>
+          <div>
+            <h2>Consume Your Own Protected Data</h2>
+          </div>
+          {isLoadingConsumeProtectedData ? (
+            <img src={loader} alt="loading" height="30px" />
+          ) : (
+            <button onClick={consumeProtectedData}>Consume Protected Data</button>
+          )}
+          {consumeProtectedDataSuccess ? (
+            <div>
+              <label style={{ display: 'inline-block', verticalAlign: 'middle' }}>
+                <img src={successIcon} alt="success" height="30px" style={{ verticalAlign: 'middle' }} />
+                You can now visualize the rented Protected Data
+                <a href={contentAsObjectURL} download="ProtectedData.zip">
+                  Download File
+                </a>
               </label>
             </div>
           ) : (
