@@ -135,7 +135,7 @@ function App() {
         app: '0xF248000F0E99e9203FdBE509019f008F9c169705', //An iDapp from the AppWhitelist Managed by iExec Team
       });
       console.log('consumeProtectedDataResult: ', consumeProtectedDataResult);
-      console.log(consumeProtectedDataResult.contentAsObjectURL);
+
       setContent(consumeProtectedDataResult.contentAsObjectURL);
       setIsLoadingConsumeProtectedData(false); // hide loader
       setConsumeProtectedDataSuccess(true); // show success icon
