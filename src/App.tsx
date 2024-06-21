@@ -3,7 +3,7 @@ import { useState } from 'react';
 import './App.css';
 import loader from './assets/loader.gif';
 import successIcon from './assets/success.png';
-import { checkCurrentChain, checkIsConnected } from './utils.ts';
+import { checkCurrentChain, checkIsConnected } from './utils/utils.ts';
 
 const iExecDataProtectorClient = new IExecDataProtector(window.ethereum);
 
@@ -101,6 +101,14 @@ function App() {
   };
 
   const createCollection = async () => {
+    setErrorMessage('');
+    try {
+      checkIsConnected();
+    } catch (err) {
+      setErrorMessage('Please install MetaMask');
+      return;
+    }
+    await checkCurrentChain();
     try {
       setCreateCollectionSuccess(false);
       setIsLoadingCreateCollection(true); // Show loader
@@ -122,6 +130,14 @@ function App() {
   };
 
   const addToCollection = async () => {
+    setErrorMessage('');
+    try {
+      checkIsConnected();
+    } catch (err) {
+      setErrorMessage('Please install MetaMask');
+      return;
+    }
+    await checkCurrentChain();
     try {
       setAddProtectedDataToCollectionSuccess(false);
       setIsLoadingAddProtectedDataToCollection(true); // Show loader
@@ -149,6 +165,14 @@ function App() {
   };
 
   const setProtectedDataToRenting = async () => {
+    setErrorMessage('');
+    try {
+      checkIsConnected();
+    } catch (err) {
+      setErrorMessage('Please install MetaMask');
+      return;
+    }
+    await checkCurrentChain();
     try {
       setSetProtectedDataToRentingSuccess(false);
       setIsLoadingSetProtectedDataToRenting(true); // Show loader
@@ -176,6 +200,14 @@ function App() {
   };
 
   const rentProtectedData = async () => {
+    setErrorMessage('');
+    try {
+      checkIsConnected();
+    } catch (err) {
+      setErrorMessage('Please install MetaMask');
+      return;
+    }
+    await checkCurrentChain();
     try {
       setRentProtectedDataSuccess(false);
       setIsLoadingRentProtectedData(true); // Show loader
@@ -200,6 +232,14 @@ function App() {
   };
 
   const consumeProtectedData = async () => {
+    setErrorMessage('');
+    try {
+      checkIsConnected();
+    } catch (err) {
+      setErrorMessage('Please install MetaMask');
+      return;
+    }
+    await checkCurrentChain();
     try {
       setConsumeProtectedDataSuccess(false);
       setIsLoadingConsumeProtectedData(true); // Show loader
@@ -236,6 +276,14 @@ function App() {
   };
 
   const getResultFromCompletedTask = async () => {
+    setErrorMessage('');
+    try {
+      checkIsConnected();
+    } catch (err) {
+      setErrorMessage('Please install MetaMask');
+      return;
+    }
+    await checkCurrentChain();
     try {
       setResultFromCompletedTaskSuccess(false);
       setIsLoadingGetResultFromCompletedTask(true); // Show loader

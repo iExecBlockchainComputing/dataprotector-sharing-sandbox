@@ -16,10 +16,18 @@ export async function checkCurrentChain() {
     console.log('Please switch to iExec chain');
     try {
       await window.ethereum.request({
-        method: 'wallet_switchEthereumChain',
+        method: 'wallet_addEthereumChain',
         params: [
           {
-            chainId: IEXEC_CHAIN_ID,
+            chainId: '0x86',
+            chainName: 'iExec Sidechain',
+            nativeCurrency: {
+              name: 'xRLC',
+              symbol: 'xRLC',
+              decimals: 18,
+            },
+            rpcUrls: ['https://bellecour.iex.ec'],
+            blockExplorerUrls: ['https://blockscout-bellecour.iex.ec'],
           },
         ],
       });
