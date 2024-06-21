@@ -3,10 +3,13 @@ import { useState } from 'react';
 import './App.css';
 import loader from './assets/loader.gif';
 import successIcon from './assets/success.png';
+import { checkCurrentChain, checkIsConnected } from './utils.ts';
 
 const iExecDataProtectorClient = new IExecDataProtector(window.ethereum);
 
 function App() {
+  const [errorMessage, setErrorMessage] = useState('');
+
   // protectData()
   const [protectedDataAddress, setProtectedDataAddress] = useState('');
   const [isLoadingProtectData, setIsLoadingProtectData] = useState(false);
@@ -63,6 +66,14 @@ function App() {
   const [content, setContent] = useState('');
 
   const protectData = async () => {
+    setErrorMessage('');
+    try {
+      checkIsConnected();
+    } catch (err) {
+      setErrorMessage('Please install MetaMask');
+      return;
+    }
+    await checkCurrentChain();
     try {
       setProtectDataSuccess(false);
       setIsLoadingProtectData(true); // Show loader
@@ -305,6 +316,11 @@ function App() {
               style={{ verticalAlign: 'middle' }}
             />
             Successful creation
+          </div>
+        )}
+        {errorMessage && (
+          <div style={{ marginTop: '10px', maxWidth: 300, color: 'red' }}>
+            {errorMessage}
           </div>
         )}
         <hr style={{ marginTop: '30px' }} />
