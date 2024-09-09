@@ -443,7 +443,7 @@ function App() {
 
       <div>
         <div>
-          <h2>Set Protected Data To Renting</h2>
+          <h2>Set Protected Data For Renting</h2>
           <label>
             Protected Data Address:{' '}
             <input
@@ -468,7 +468,7 @@ function App() {
           <img src={loader} alt="loading" height="30px" />
         ) : (
           <button onClick={setProtectedDataToRenting}>
-            Set Protected Data to Renting
+            Set Protected Data for Renting
           </button>
         )}
         {setProtectedDataToRentingSuccess && (
@@ -479,7 +479,7 @@ function App() {
               height="30px"
               style={{ verticalAlign: 'middle' }}
             />
-            Protected Data Set to Renting
+            Protected Data Set for Renting
           </div>
         )}
         <hr style={{ marginTop: '30px' }} />
