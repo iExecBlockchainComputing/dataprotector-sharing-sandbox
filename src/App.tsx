@@ -80,8 +80,10 @@ function App() {
       const protectedDataResponse =
         await iExecDataProtectorClient.core.protectData({
           data: {
-            // A "file" field must be used if you use the app provided by iExec
-            file: 'DataProtector Sharing > Sandbox test!',
+            // A binary "file" field must be used if you use the app provided by iExec
+            file: new TextEncoder().encode(
+              'DataProtector Sharing > Sandbox test!'
+            ),
           },
           name: 'DataProtector Sharing Sandbox - Test protected data',
         });
