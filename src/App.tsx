@@ -511,6 +511,17 @@ function App() {
         >
           Consume your own protected data
         </div>
+        <div>
+          <label>
+            Protected Data Address:{' '}
+            <input
+              name="Protected Data Address"
+              value={protectedDataAddress}
+              style={{ width: '350px' }}
+              onChange={handleProtectedDataAddressChange}
+            />
+          </label>
+        </div>
         {isLoadingConsumeProtectedData ? (
           <img src={loader} alt="loading" height="30px" />
         ) : (
