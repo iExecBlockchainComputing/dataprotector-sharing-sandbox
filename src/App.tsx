@@ -246,8 +246,10 @@ function App() {
       const consumeProtectedDataResult =
         await iExecDataProtectorClient.sharing.consumeProtectedData({
           protectedData: protectedDataAddress,
-          // App is part of the whitelist of apps defined in the addToCollection() call
+          // app is part of the whitelist of apps defined in the addToCollection() call
           app: import.meta.env.VITE_PROTECTED_DATA_DELIVERY_DAPP_ADDRESS,
+          // workerpool may be omitted to use the default production workerpool
+          workerpool: import.meta.env.VITE_DEMO_WORKERPOOL_ADDRESS,
           onStatusUpdate: (status) => {
             console.log('[consumeProtectedData] status', status);
           },
