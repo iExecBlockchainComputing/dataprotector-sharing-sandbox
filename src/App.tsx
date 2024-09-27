@@ -1,4 +1,4 @@
-import { IExecDataProtector, WorkflowError } from '@iexec/dataprotector';
+import { IExecDataProtector } from '@iexec/dataprotector';
 import { useState } from 'react';
 import './App.css';
 import loader from './assets/loader.gif';
@@ -92,11 +92,7 @@ function App() {
       setProtectDataSuccess(true); // show success icon
     } catch (e) {
       setIsLoadingProtectData(false); // hide loader
-      if (e instanceof WorkflowError) {
-        console.error(e.originalError);
-      } else {
-        console.error(e);
-      }
+      console.error(e);
     }
   };
 
@@ -121,11 +117,7 @@ function App() {
       setCreateCollectionSuccess(true); // show success icon
     } catch (e) {
       setIsLoadingCreateCollection(false); // hide loader
-      if (e instanceof WorkflowError) {
-        console.error(e.originalError);
-      } else {
-        console.error(e);
-      }
+      console.error(e);
     }
   };
 
@@ -156,11 +148,7 @@ function App() {
       setAddProtectedDataToCollectionSuccess(true); // show success icon
     } catch (e) {
       setIsLoadingAddProtectedDataToCollection(false); // hide loader
-      if (e instanceof WorkflowError) {
-        console.error(e.originalError);
-      } else {
-        console.error(e);
-      }
+      console.error(e);
     }
   };
 
@@ -191,11 +179,7 @@ function App() {
       setSetProtectedDataToRentingSuccess(true); // show success icon
     } catch (e) {
       setIsLoadingSetProtectedDataToRenting(false); // hide loader
-      if (e instanceof WorkflowError) {
-        console.error(e.originalError);
-      } else {
-        console.error(e);
-      }
+      console.error(e);
     }
   };
 
@@ -223,11 +207,7 @@ function App() {
       setRentProtectedDataSuccess(true); // show success icon
     } catch (e) {
       setIsLoadingRentProtectedData(false); // hide loader
-      if (e instanceof WorkflowError) {
-        console.error(e.originalError);
-      } else {
-        console.error(e);
-      }
+      console.error(e);
     }
   };
 
@@ -269,11 +249,7 @@ function App() {
       setConsumeProtectedDataSuccess(true); // show success icon
     } catch (e) {
       setIsLoadingConsumeProtectedData(false); // hide loader
-      if (e instanceof WorkflowError) {
-        console.error(e.originalError);
-      } else {
-        console.error(e);
-      }
+      console.error(e);
     }
   };
 
@@ -305,11 +281,7 @@ function App() {
       setResultFromCompletedTaskSuccess(true); // show success icon
     } catch (e) {
       setIsLoadingGetResultFromCompletedTask(false); // hide loader
-      if (e instanceof WorkflowError) {
-        console.error(e.originalError);
-      } else {
-        console.error(e);
-      }
+      console.error(e);
     }
   };
 
