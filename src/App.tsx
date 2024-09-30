@@ -1,4 +1,4 @@
-import { IExecDataProtector, WorkflowError } from '@iexec/dataprotector';
+import { IExecDataProtector } from '@iexec/dataprotector';
 import { useState } from 'react';
 import './App.css';
 import loader from './assets/loader.gif';
@@ -80,8 +80,10 @@ function App() {
       const protectedDataResponse =
         await iExecDataProtectorClient.core.protectData({
           data: {
-            // A "file" field must be used if you use the app provided by iExec
-            file: 'DataProtector Sharing > Sandbox test!',
+            // A binary "file" field must be used if you use the app provided by iExec
+            file: new TextEncoder().encode(
+              'DataProtector Sharing > Sandbox test!'
+            ),
           },
           name: 'DataProtector Sharing Sandbox - Test protected data',
         });
@@ -92,11 +94,7 @@ function App() {
       setProtectDataSuccess(true); // show success icon
     } catch (e) {
       setIsLoadingProtectData(false); // hide loader
-      if (e instanceof WorkflowError) {
-        console.error(e.originalError);
-      } else {
-        console.error(e);
-      }
+      console.error(e);
     }
   };
 
@@ -121,11 +119,7 @@ function App() {
       setCreateCollectionSuccess(true); // show success icon
     } catch (e) {
       setIsLoadingCreateCollection(false); // hide loader
-      if (e instanceof WorkflowError) {
-        console.error(e.originalError);
-      } else {
-        console.error(e);
-      }
+      console.error(e);
     }
   };
 
@@ -156,11 +150,7 @@ function App() {
       setAddProtectedDataToCollectionSuccess(true); // show success icon
     } catch (e) {
       setIsLoadingAddProtectedDataToCollection(false); // hide loader
-      if (e instanceof WorkflowError) {
-        console.error(e.originalError);
-      } else {
-        console.error(e);
-      }
+      console.error(e);
     }
   };
 
@@ -191,11 +181,7 @@ function App() {
       setSetProtectedDataToRentingSuccess(true); // show success icon
     } catch (e) {
       setIsLoadingSetProtectedDataToRenting(false); // hide loader
-      if (e instanceof WorkflowError) {
-        console.error(e.originalError);
-      } else {
-        console.error(e);
-      }
+      console.error(e);
     }
   };
 
@@ -223,11 +209,7 @@ function App() {
       setRentProtectedDataSuccess(true); // show success icon
     } catch (e) {
       setIsLoadingRentProtectedData(false); // hide loader
-      if (e instanceof WorkflowError) {
-        console.error(e.originalError);
-      } else {
-        console.error(e);
-      }
+      console.error(e);
     }
   };
 
@@ -246,8 +228,10 @@ function App() {
       const consumeProtectedDataResult =
         await iExecDataProtectorClient.sharing.consumeProtectedData({
           protectedData: protectedDataAddress,
-          // App is part of the whitelist of apps defined in the addToCollection() call
+          // app is part of the whitelist of apps defined in the addToCollection() call
           app: import.meta.env.VITE_PROTECTED_DATA_DELIVERY_DAPP_ADDRESS,
+          // workerpool may be omitted to use the default production workerpool
+          workerpool: import.meta.env.VITE_DEMO_WORKERPOOL_ADDRESS,
           onStatusUpdate: (status) => {
             console.log('[consumeProtectedData] status', status);
           },
@@ -267,11 +251,7 @@ function App() {
       setConsumeProtectedDataSuccess(true); // show success icon
     } catch (e) {
       setIsLoadingConsumeProtectedData(false); // hide loader
-      if (e instanceof WorkflowError) {
-        console.error(e.originalError);
-      } else {
-        console.error(e);
-      }
+      console.error(e);
     }
   };
 
@@ -303,11 +283,7 @@ function App() {
       setResultFromCompletedTaskSuccess(true); // show success icon
     } catch (e) {
       setIsLoadingGetResultFromCompletedTask(false); // hide loader
-      if (e instanceof WorkflowError) {
-        console.error(e.originalError);
-      } else {
-        console.error(e);
-      }
+      console.error(e);
     }
   };
 
@@ -536,6 +512,17 @@ function App() {
           }}
         >
           Consume your own protected data
+        </div>
+        <div>
+          <label>
+            Protected Data Address:{' '}
+            <input
+              name="Protected Data Address"
+              value={protectedDataAddress}
+              style={{ width: '350px' }}
+              onChange={handleProtectedDataAddressChange}
+            />
+          </label>
         </div>
         {isLoadingConsumeProtectedData ? (
           <img src={loader} alt="loading" height="30px" />
